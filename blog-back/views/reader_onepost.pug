@@ -1,0 +1,33 @@
+extends layout 
+
+block content 
+
+  p
+    a(href='/') Home
+  p
+    a(href='/view/posts') Back to all posts
+
+  h1= post.title 
+
+  section.post 
+    div #{post.createDate}
+    div #{post.content}
+
+  h2 Comments
+  section.comments
+    ul 
+      for comment in comments   
+        div.commentCard 
+          p #{comment.name} 
+          p #{comment.createDate} 
+          p #{comment.content}
+
+  h3 Add new comment
+  form(method='POST')
+    label(for='name') Name: 
+    input(type='text' name='name' required='true') 
+
+    label(for='content') Content: 
+    textarea(name='content' rows='4' required='true') 
+    
+    button(type='submit') Submit

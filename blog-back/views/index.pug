@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  nav 
+    ul  
+      li  
+        a(href='/') Home 
+
+
+      if user 
+        li  
+          a(href='/create/posts') View all posts
+        li 
+          a(href='/create/posts/new') Create new post
+
+      else 
+        li  
+          a(href='/login') Login 
+        li  
+          a(href='/view/posts') View all posts

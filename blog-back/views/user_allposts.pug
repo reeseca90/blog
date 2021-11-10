@@ -1,0 +1,24 @@
+extends layout 
+
+block content 
+
+  h1= title 
+
+  section.postList 
+    ul 
+      for post in posts
+        li 
+          a(href=post.createUrl) #{post.title}
+          | , #{post.createDate}, #{post.published===false ? 'Not Published' : 'Published' }
+
+  nav 
+    ul  
+      li  
+        a(href='/') Home 
+
+      li  
+        a(href='/create/posts') View all posts
+
+      li 
+        a(href='/create/posts/new') Create new post
+

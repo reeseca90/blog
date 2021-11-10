@@ -1,0 +1,27 @@
+extends layout 
+
+block content 
+
+  h1= title 
+
+  if post
+    form(method='POST')
+      input(type='hidden' name='deletePostID' value=(undefined===post ? '' : post._id))
+      button(type='submit') Delete Post
+
+  p
+    a(href='/create/posts') Back to all posts
+
+  form(method='POST')
+    label(for='title') Title: 
+    input(type='text' name='title' required='true' value=(undefined===post ? '' : post.title)) 
+
+    label(for='content') Content: 
+    textarea(name='content' rows='4' required='true' value=(undefined===post ? '' : post.content)) #{undefined===post ? '' : post.content}
+
+    label(for='published') Publish Now
+    input(type='checkbox' name='published' value='publish')
+
+    input(type='hidden' name='createDate' value=(undefined===post ? '' : post.createDate))
+    button(type='submit') Submit
+

@@ -1,0 +1,26 @@
+extends layout 
+
+block content 
+
+  h1= title 
+
+  section.postList 
+    ul 
+      for post in posts
+        if post.published
+          li 
+            a(href=post.viewUrl) #{post.title}, #{post.createDate}
+
+  nav 
+    ul  
+      li  
+        a(href='/') Home 
+
+
+      if user 
+        li  
+          a(href='/create/posts') View all posts
+
+      else 
+        li  
+          a(href='/view/posts') View all posts

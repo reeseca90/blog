@@ -1,0 +1,37 @@
+block content 
+
+  p
+    a(href='/') Home
+  p
+    a(href='/create/posts') Back to all posts
+
+  h1= title
+
+  section.post 
+    div #{post.title}
+    div #{post.createDate}
+    div #{post.content}
+
+  a(href=post.createUrl + '/edit') Edit post
+
+  h2 Comments
+  section.comments
+    ul 
+      for comment in comments   
+        div.commentCard 
+          p #{comment.name} 
+          p #{comment.createDate} 
+          p #{comment.content}
+        form(method='POST')
+          input(type='hidden' name='commentID' value=comment._id)
+          button(type='submit') Delete comment
+
+  h3 Add new comment
+  form(method='POST')
+    label(for='name') Name: 
+    input(type='text' name='name' required='true') 
+
+    label(for='content') Content: 
+    textarea(name='content' rows='4' required='true') 
+    
+    button(type='submit') Submit

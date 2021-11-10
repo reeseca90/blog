@@ -1,0 +1,22 @@
+extends layout 
+
+block content 
+
+  h1= title 
+
+  p 
+    a(href='/') Home
+
+  form(method='POST')
+    label(for='username') Username: 
+    input(type='text' name='username' required='true')
+
+    label(for='password') Password: 
+    input(type='password' name='password' required='true') 
+
+    button(type='submit') Register
+
+  if errors 
+    ul
+      for error in errors 
+        li!= error.msg
