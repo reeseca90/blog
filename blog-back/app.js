@@ -14,13 +14,13 @@ const createRouter = require('./routes/create');
 
 var app = express();
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
 const mongoose = require('mongoose');
-const mongoDB = "mongodb+srv://craig:libraryapp@cluster0.jqdmn.mongodb.net/blog?retryWrites=true&w=majority";
+const mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
