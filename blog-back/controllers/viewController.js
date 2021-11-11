@@ -9,7 +9,7 @@ exports.view_all = function(req, res, next) {
     .sort({createDate: -1})
     .exec(function(err, posts) {
       if (err) { return next(err); }
-      res.render('reader_allposts', { title: 'All Posts', posts: posts, user: req.user });
+      res.send({ title: 'All Posts', posts: posts, user: req.user });
     });
 }
 
@@ -33,7 +33,7 @@ exports.view_one = function(req, res, next) {
       err.status = 404;
       return next(err);
     }
-    res.render('reader_onepost', { title: 'Post', post: results.post, comments: results.comment, user: req.user });
+    res.send({ title: 'Post', post: results.post, comments: results.comment, user: req.user });
   }
   );
 
@@ -56,7 +56,7 @@ exports.comment = [
     });
 
     if (!errors.isEmpty()) {
-      res.render('reader_onepost', { title: 'Post', user: req.user , errors: errors.array()})
+      res.send({ title: 'Post', user: req.user , errors: errors.array()})
     }
     else {
       comment.save(function(err) {

@@ -9,11 +9,11 @@ exports.view_all = function(req, res, next) {
     .sort({createDate: -1})
     .exec(function(err, posts) {
       if (err) { return next(err); }
-      res.render('user_allposts', { title: 'All Posts', posts: posts, user: req.user });
+      res.send({ title: 'All Posts', posts: posts, user: req.user });
     });}
 
 exports.newpost = function(req, res, next) {
-  res.render('postform', { title: 'Create New Post', user: req.user });
+  res.send({ title: 'Create New Post', user: req.user });
 }
 
 exports.newpost_submit = function(req, res, next) {
@@ -54,7 +54,7 @@ exports.newpost_submit = function(req, res, next) {
       err.status = 404;
       return next(err);
     }
-    res.render('user_onepost', { title: 'Post', post: results.post, comments: results.comment, user: req.user });
+    res.send({ title: 'Post', post: results.post, comments: results.comment, user: req.user });
   });
 }
 
@@ -120,7 +120,7 @@ exports.view_one_edit = function(req, res, next) {
   Post.findById(req.params.id).exec(function(err, results) {
     if (err) { return next(err); }
     console.log(results)
-    res.render('postform', { title: 'Edit Post', post: results, user: req.user });
+    res.send({ title: 'Edit Post', post: results, user: req.user });
   });
 }
 

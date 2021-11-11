@@ -39,16 +39,15 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
-
-
+/* 
 // home page
 exports.home = function(req, res, next) {
-  res.render('index', { title: 'Home Page', user: req.user });
+  res.send({ title: 'Home Page', user: req.user });
 }
-
+ */
 // login page GET
 exports.login_get = function(req, res, next) {
-  res.render('loginform', { title: 'Log In' });
+  res.send({ title: 'Log In' });
 }
 
 

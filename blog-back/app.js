@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const passport = require('passport');
 const session = require("express-session");
+const cors = require('cors');
 
 require('dotenv').config();
 
@@ -13,6 +14,8 @@ const viewRouter = require('./routes/view');
 const createRouter = require('./routes/create');
 
 var app = express();
+
+app.use(cors())
 
 app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
