@@ -9,7 +9,7 @@ exports.view_all = function(req, res, next) {
     .sort({createDate: -1})
     .exec(function(err, posts) {
       if (err) { return next(err); }
-      res.send({ title: 'All Posts', posts: posts, user: req.user });
+      res.send({ title: 'All Posts', posts: posts });
     });
 }
 
@@ -33,7 +33,7 @@ exports.view_one = function(req, res, next) {
       err.status = 404;
       return next(err);
     }
-    res.send({ title: 'Post', post: results.post, comments: results.comment, user: req.user });
+    res.send({ title: 'Post', post: results.post, comments: results.comment });
   }
   );
 
@@ -56,7 +56,7 @@ exports.comment = [
     });
 
     if (!errors.isEmpty()) {
-      res.send({ title: 'Post', user: req.user , errors: errors.array()})
+      res.send({ title: 'Submit Failed', errors: errors.array() })
     }
     else {
       comment.save(function(err) {

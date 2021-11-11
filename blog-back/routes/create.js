@@ -24,4 +24,5 @@ router.get('/posts/:id/edit', createController.view_one_edit);
 // POST edit post form
 router.post('/posts/:id/edit', createController.editAction);
 
+
 module.exports = router;

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 require('dotenv').config();
 const LocalStrategy = require('passport-local');
+const jwt = require('jsonwebtoken');
 
 // passport functions for login
 
@@ -19,6 +20,10 @@ passport.use(
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
           // passwords match! log user in
+          jwt.sign({user}, process.env.SECRET, (err, token) => {
+            console.log(token);
+            res.send({token})
+          });
           return done(null, user)
         } else {
           // passwords do not match!
@@ -39,12 +44,7 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
-/* 
-// home page
-exports.home = function(req, res, next) {
-  res.send({ title: 'Home Page', user: req.user });
-}
- */
+
 // login page GET
 exports.login_get = function(req, res, next) {
   res.send({ title: 'Log In' });
@@ -52,27 +52,15 @@ exports.login_get = function(req, res, next) {
 
 
 // login page POST
-exports.login_post = passport.authenticate('local', {
-    successRedirect: '/create/posts',
-    failureRedirect: '/login'
-});
+exports.login_post = passport.authenticate('local',
+  function(req, res) {
+    console.log(res);
+  }
+);
 
-/* 
-// signup get and post
-exports.signup_get = function(req, res, next) {
-  res.render('signupform', { title: 'Sign Up' });
+// logout
+exports.logout = (req, res) => {
+  req.logout();
+  res.redirect("/");
 }
 
-exports.signup_post = function(req, res, next) {
-  bcrypt.hash(req.body.password, 5, (err, hashedPassword) => {
-    const user = new User(
-      {
-        username: req.body.username,
-        password: hashedPassword
-    }).save(function(err) {
-      if (err) { return next(err); }
-      res.redirect('/login');
-    });
-  });
-}
- */

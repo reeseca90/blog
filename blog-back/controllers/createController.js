@@ -10,7 +10,8 @@ exports.view_all = function(req, res, next) {
     .exec(function(err, posts) {
       if (err) { return next(err); }
       res.send({ title: 'All Posts', posts: posts, user: req.user });
-    });}
+    });
+}
 
 exports.newpost = function(req, res, next) {
   res.send({ title: 'Create New Post', user: req.user });
@@ -86,36 +87,6 @@ function delete_comment(req, res, next) {
   })
 }
 
-/* 
-exports.comment = [
-  body('name', 'Must provide a name').trim().isLength({min:1}).escape(),
-  body('content', 'Cannot make a blank comment!').trim().isLength({min:1}).escape(),
-
-  async (req, res, next) => {
-    const errors = validationResult(req);
-    const post = await Post.findById(req.params.id);
-
-    const comment = new Comment(
-      {
-        name: req.body.name,
-        content: req.body.content,
-        post: post._id
-    });
-
-    if (!errors.isEmpty()) {
-      res.render('reader_onepost', { title: 'Post', user: req.user , errors: errors.array()})
-    }
-    else {
-      comment.save(function(err) {
-        if (err) { return next(err); }
-        res.redirect(post.createUrl);
-      })
-    }
-  }
-];
- */
-
-
 exports.view_one_edit = function(req, res, next) {
   Post.findById(req.params.id).exec(function(err, results) {
     if (err) { return next(err); }
@@ -156,26 +127,3 @@ function delete_post(req, res, next) {
     res.redirect('/create/posts/');
   })
 }
-
-/* 
-exports.view_one_edit_submit = function(req, res, next) {
-  if (req.body.published == 'publish') {
-    req.body.published = true
-  } else {
-    req.body.published = false
-  }
-  const post = new Post(
-    {
-      createDate: req.body.createDate,
-      title: req.body.title,
-      content: req.body.content,
-      published: req.body.published,
-      _id: req.params.id
-    });
-    
-  Post.findByIdAndUpdate(req.params.id, post, {}, function(err) {
-      if (err) { return next(err); }
-      res.redirect('/create/posts');
-  });
-}
- */
