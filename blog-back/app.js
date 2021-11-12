@@ -13,6 +13,25 @@ var indexRouter = require('./routes/index');
 const viewRouter = require('./routes/view');
 const createRouter = require('./routes/create');
 
+const JWTstrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
+
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: process.env.SECRET,
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
+
 var app = express();
 
 app.use(cors())
@@ -39,8 +58,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/create', passport.authenticate('jwt', { session: false }), createRouter);
 app.use('/view', viewRouter);
-app.use('/create', createRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
