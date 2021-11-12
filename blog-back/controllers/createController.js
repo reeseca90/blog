@@ -91,7 +91,7 @@ exports.view_one_edit = function(req, res, next) {
   Post.findById(req.params.id).exec(function(err, results) {
     if (err) { return next(err); }
     console.log(results)
-    res.send({ title: 'Edit Post', post: results, user: req.user });
+    res.send({ post: results });
   });
 }
 
@@ -111,10 +111,12 @@ exports.editAction = function(req, res, next) {
         title: req.body.title,
         content: req.body.content,
         published: req.body.published,
-        _id: req.params.id
+        _id: req.body._id
       });
+
+    console.log('new post: ' + post)
       
-    Post.findByIdAndUpdate(req.params.id, post, {}, function(err) {
+    Post.findByIdAndUpdate(req.body._id, post, {}, function(err) {
         if (err) { return next(err); }
         res.redirect('/create/posts');
     });
