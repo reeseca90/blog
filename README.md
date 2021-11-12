@@ -17,8 +17,8 @@ Complete:
   - Edit posts
   - Delete posts
   - Delete comments
+  - Delete all comments associated with a post when the post is deleted 
 
 In progress:
 - Enable as user:
     - Hiding posts
-- Prevent deleting a post if comments exist OR delete all comments at the same time

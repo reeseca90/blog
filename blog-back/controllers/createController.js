@@ -3,6 +3,7 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 
 const async = require('async');
+const mongoose = require('mongoose');
 
 exports.view_all = function(req, res, next) {
   Post.find({})
@@ -90,7 +91,6 @@ function delete_comment(req, res, next) {
 exports.view_one_edit = function(req, res, next) {
   Post.findById(req.params.id).exec(function(err, results) {
     if (err) { return next(err); }
-    console.log(results)
     res.send({ post: results });
   });
 }
@@ -124,6 +124,11 @@ exports.editAction = function(req, res, next) {
 }
 
 function delete_post(req, res, next) {
+  const postID = mongoose.Types.ObjectId(req.body.deletePostID);
+
+  Comment.deleteMany({ 'post': postID }, {}, function(err) {
+    if (err) { return next(err); } 
+  })
   Post.findByIdAndDelete(req.body.deletePostID, function (err) {
     if (err) { return next(err); }
     res.redirect('/create/posts/');
