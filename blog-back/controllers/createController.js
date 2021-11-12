@@ -19,11 +19,6 @@ exports.newpost = function(req, res, next) {
 }
 
 exports.newpost_submit = function(req, res, next) {
-  if (req.body.published == 'publish') {
-    req.body.published = true
-  } else {
-    req.body.published = false
-  }
   const post = new Post(
     {
       createDate: Date.now(),
@@ -100,11 +95,6 @@ exports.editAction = function(req, res, next) {
     delete_post(req, res, next);
   }
   else {
-    if (req.body.published == 'publish') {
-      req.body.published = true
-    } else {
-      req.body.published = false
-    }
     const post = new Post(
       {
         createDate: req.body.createDate,

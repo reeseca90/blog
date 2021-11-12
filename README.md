@@ -18,7 +18,7 @@ Complete:
   - Delete posts
   - Delete comments
   - Delete all comments associated with a post when the post is deleted 
+  - Hiding posts
 
 In progress:
-- Enable as user:
-    - Hiding posts
+  - Design
